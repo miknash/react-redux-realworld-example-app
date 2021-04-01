@@ -1,7 +1,7 @@
 pipeline {
   agent {
     docker {
-      image 'node:12-alpine'
+      image 'node:alpine'
       args '-p 3000:3000'
     }
   }
@@ -10,7 +10,7 @@ pipeline {
             steps {
                 sh 'pwd'
                 sh 'ls'
-                sh '${WORKSPACE}/build.sh stage ${BRANCH_NAME} ${BUILD_NUMBER}' 
+                sh '${WORKSPACE}/build.sh ${BRANCH_NAME} ${BUILD_NUMBER}' 
             }
         }
     }
