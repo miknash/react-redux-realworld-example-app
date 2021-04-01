@@ -1,20 +1,15 @@
 pipeline {
-  agent {
-    node {
-      label 'react'
+    agent {
+        docker {
+            image 'node:6-alpine' 
+            args '-p 3000:3000' 
+        }
     }
-
-  }
-  stages {
-    stage('') {
-      steps {
-        sh '''#!/bin/bash
-BUILD_ENV=$1
-BRANCH_NAME=$2
-BUILD_NUMBER=$3
-'''
-      }
+    stages {
+        stage('Build') { 
+            steps {
+                sh 'build.sh ${BRANCH_NAME} ${BUILD_NUMBER}' 
+            }
+        }
     }
-
-  }
 }
