@@ -17,13 +17,16 @@ tar -cf - --exclude './staging' --exclude './production' . | tar -xC production
 sed -i 's/conduit.productionready.io/staging.productionready.io/g' staging/src/agent.js
 sed -i 's/conduit.productionready.io/production.productionready.io/g' production/src/agent.js
 
+echo "Starting Staging Build"
 cd staging
 npm install
-npm build
+npm run build
+
+
 
 cd ../production
 npm install
-npm build
+npm run build
 
 
 
