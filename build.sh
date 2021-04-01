@@ -8,11 +8,11 @@ BUILD_NUMBER=$2
 
 mkdir staging
 mkdir production
-cp -r . staging
-cp -r . production
+tar -cf - --excluder './staging' --exclude './production' . | tar -xC staging
+tar -cf - --excluder './staging' --exclude './production' . | tar -xC production
 
 sed -i 's/conduit.productionready.io/staging.productionready.io/g' staging/src/agent.js
-sed -i 's/conduit.productionready.io/production.productionready.io/g' prod/src/agent.js
+sed -i 's/conduit.productionready.io/production.productionready.io/g' production/src/agent.js
 
 cd staging
 npm install
