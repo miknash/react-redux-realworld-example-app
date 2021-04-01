@@ -21,15 +21,12 @@ echo "Starting Staging Build"
 cd staging
 npm install
 npm run build
-cd build
-tar zcf ${BRANCH_NAME}_${BUILD_NUMBER}.tar.gzip *
-cd ..
+tar -C ./build -zcf ${BRANCH_NAME}_${BUILD_NUMBER}.tar.gzip ./
 
 echo "Starting Prduction build"
 cd ../production
 npm install
 npm run build
-cd build
-tar zcf ${BRANCH_NAME}_${BUILD_NUMBER}.tar.gzip *
+tar -C ./build -zcf ${BRANCH_NAME}_${BUILD_NUMBER}.tar.gzip ./
 
 
