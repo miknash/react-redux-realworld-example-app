@@ -8,9 +8,15 @@ pipeline {
     stages {
         stage('Build') { 
             steps {
-                sh 'pwd'
-                sh 'ls'
                 sh '${WORKSPACE}/build.sh ${BRANCH_NAME} ${BUILD_NUMBER}' 
+            }
+        }
+        stage('Publish_artifacts'){
+            steps{
+                 withAWS(region:'eu-central-1',credentials:'test-tarik') {
+                    s3Upload(file:'staging/${BRANCH_NAME}_${BUILD_NUMBER}.tag.gz',bucket:'tarik-react-devops-artifacts', path:'staging/')
+                    s3Upload(file:'production/${BRANCH_NAME}_${BUILD_NUMBER}.tag.gz',bucket:'tarik-react-devops-artifacts', path:'production/')
+            }
             }
         }
     }
