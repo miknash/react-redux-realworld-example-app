@@ -8,7 +8,7 @@ pipeline {
     stages {
         stage('Build') { 
             steps {
-                sh 'pwd' 
+                sh '${WORKSPACE}\build.sh stage ${BRANCH_NAME} ${BUILD_NUMBER}' 
             }
         }
     }
