@@ -6,6 +6,9 @@ BUILD_NUMBER=$2
 #echo $BRANCH_NAME
 #echo $BUILD_NUMBER
 
+if [ -d "staging" ]; then rm -Rf staging; fi
+if [ -d "production" ]; then rm -Rf production; fi
+
 mkdir staging
 mkdir production
 tar -cf - --exclude './staging' --exclude './production' . | tar -xC staging
