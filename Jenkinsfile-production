@@ -1,0 +1,32 @@
+pipeline {
+  agent {
+    docker {
+      image 'alpine'
+    }
+  }
+  parameters {
+    string (
+      defaultValue: '', 
+      name: 'fileName', 
+      trim: true
+    )
+  }
+    stages {
+        stage('Deploy_Staging'){
+            when {
+                expression {
+                return params.fileName != ''
+                }
+            }
+            steps {
+                withAWS(region:'eu-central-1', credentials:'test-tarik'){
+                    sh 'mkdir deploy'
+                    s3Download file:"${params.fileName}.tar.gzip", bucket:'tarik-devops-react-artifacts', path:"production/${params.fileName}.tar.gzip"
+                    sh 'tar -xvf ${params.fileName}.tar.gzip -C ./deploy'
+                    s3Upload bucket:'tarik-devops-react-production', includePathPattern:'**/*', workingDir:'deploy'
+                }
+            }
+        }
+    }
+
+}
