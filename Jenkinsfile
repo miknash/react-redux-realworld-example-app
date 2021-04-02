@@ -13,9 +13,9 @@ pipeline {
         }
         stage('Publish_artifacts'){
             steps{
-                 withAWS(region:'eu-central-1', credentials:'test-tarik') {
-                    s3Upload file:"staging/${BRANCH_NAME}_${BUILD_NUMBER}.tag.gz", bucket:'tarik-devops-react', path:'staging/'
-                    s3Upload file:"production/${BRANCH_NAME}_${BUILD_NUMBER}.tag.gz", bucket:'tarik-devops-react', path:'production/'
+                withAWS(region:'eu-central-1', credentials:'test-tarik') {
+                    s3Upload file:"staging/${BRANCH_NAME}_${BUILD_NUMBER}.tar.gzip", bucket:'tarik-devops-react', path:'staging/'
+                    s3Upload file:"production/${BRANCH_NAME}_${BUILD_NUMBER}.tar.gzip", bucket:'tarik-devops-react', path:'production/'
                 }
             }
         }
